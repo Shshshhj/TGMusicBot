@@ -1,6 +1,8 @@
 # TGMusicBot
 TGMusicBot Beta
+
 Demo Bot: [@KursadMusicBot](https://t.me/KursadMusicBot) Gruplarınıza ekleyip kullanabilirsiniz.
+
 Komutlara `/help` yazarak ulaşabilirsiniz.
 
 ## Kurulum 
@@ -19,4 +21,5 @@ python3 music.py
 
 ## İletişim
 Herhangi bir sorunda benimle iletişime geçebilirsiniz.
+
 Telegram: [@kursadHD](https://t.me/kursadHD)
