@@ -5,6 +5,8 @@ Demo Bot: [@KursadMusicBot](https://t.me/KursadMusicBot) Gruplarınıza ekleyip 
 
 Komutlara `/help` yazarak ulaşabilirsiniz.
 
+**Not:** Bot beta versiyonundadır. Hatalar verebilir, komutlar çalışmayabilir.
+
 ## Kurulum 
 **Not:** Python3.6+ ve Node.js15+ kurulu olmalıdır.
 
