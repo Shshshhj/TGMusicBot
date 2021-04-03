@@ -6,7 +6,7 @@ import os
 import json
 
 if os.path.isdir('ses') == False:
-	os.mkdir('ses)
+	os.mkdir('ses')
 
 app = Client('music')
 call = Call(app)
