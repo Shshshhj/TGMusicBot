@@ -1,7 +1,7 @@
 # TGMusicBot
 TGMusicBot Beta
 
-Demo Bot: [@KursadMusicBot](https://t.me/KursadMusicBot) Gruplarınıza ekleyip kullanabilirsiniz.
+Demo Bot: [@kursadHDMusic](https://t.me/kursadHDMusic) Gruplarınıza ekleyip kullanabilirsiniz.
 
 Komutlara `/help` yazarak ulaşabilirsiniz.
 
