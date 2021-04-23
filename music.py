@@ -40,15 +40,20 @@ async def play(_, msg):
 	vid = details['id']
 	vname = details['title']
 	thumb = details['thumbnails'][0]
-    
+
 	if playing[str(chatid)] == False:
 		playing[str(chatid)] = True
 		await asyncio.sleep(1)
 		now_playing[str(chatid)] = vid
 		if os.path.isfile(f'./ses/{vid}.raw') == False:
-			os.system(f'ffmpeg -i "$(youtube-dl -x -g "https://youtube.com/watch?v={vid}")" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 ./ses/{vid}.raw')
+			proc = await asyncio.create_subprocess_shell(
+				f'ffmpeg -i "$(youtube-dl -x -g "https://youtube.com/watch?v={vid}")" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 ./ses/{vid}.raw',
+				asyncio.subprocess.PIPE,
+				stderr=asyncio.subprocess.PIPE,
+			)
+			await proc.communicate()
 		await asyncio.sleep(1)
-		await msg.reply_text(f'"__{vname}__" oynatiliyor [\u2063]({thumb})')
+		await msg.reply_text(f'"__{vname}__" oynatılıyor [\u2063]({thumb})')
 		call.join_group_call(
 			chatid,
 			f'./ses/{vid}.raw',
@@ -58,8 +63,13 @@ async def play(_, msg):
 	else:
 		queue[str(chatid)].append({'id': vid, 'name': vname, 'thumb': thumb})
 		if os.path.isfile(f'./ses/{vid}.raw') == False:
-			os.system(f'ffmpeg -i "$(youtube-dl -x -g "https://youtube.com/watch?v={vid}")" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 ./ses/{vid}.raw')
-		await msg.reply_text(f'{len(queue[str(chatid)])}. siraya eklendi')
+			proc = await asyncio.create_subprocess_shell(
+				f'ffmpeg -i "$(youtube-dl -x -g "https://youtube.com/watch?v={vid}")" -f s16le -ac 1 -acodec pcm_s16le -ar 48000 ./ses/{vid}.raw',
+				asyncio.subprocess.PIPE,
+				stderr=asyncio.subprocess.PIPE,
+			)
+			await proc.communicate()
+		await msg.reply_text(f'{len(queue[str(chatid)])}. sıraya eklendi')
 
 
 
@@ -80,8 +90,12 @@ async def bitis(chatid):
 		now_playing[str(chatid)] = queue[str(chatid)][0]["id"]
 		queue[str(chatid)].pop(0)
 	else:
+		call.leave_group_call(chatid)
 		playing[str(chatid)] = False
 		now_playing[str(chatid)] = ''
+		queue[str(chatid)] = [] # her ihtimale karşı
+
+
 
 
 
@@ -97,12 +111,13 @@ async def skip(_, msg):
 			msg.chat.id,
 			f'./ses/{queue[str(msg.chat.id)][0]["id"]}.raw'
 		)
-		await app.send_message(msg.chat.id, f'"__{queue[0]["name"]}__" oynatiliyor [\u2063]({queue[0]["thumb"]})')
+		await app.send_message(msg.chat.id, f'"__{queue[str(msg.chat.id)][0]["name"]}__" oynatiliyor [\u2063]({queue[str(msg.chat.id)][0]["thumb"]})')
 		now_playing[str(msg.chat.id)] = queue[str(msg.chat.id)][0]["id"]
 		queue[str(msg.chat.id)].pop(0)
 	else:
 		playing[str(msg.chat.id)] = False
 		now_playing[str(msg.chat.id)] = ''
+		queue[str(msg.chat.id)] = []
 		await msg.reply_text('Sirada sarki yok')
 		call.leave_group_call(msg.chat.id)
 	
@@ -142,6 +157,7 @@ async def leave(_, msg):
 	now_playing[str(msg.chat.id)] = ''
 
 	call.leave_group_call(msg.chat.id)
+
 
 
 call.run()
