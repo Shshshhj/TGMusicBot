@@ -1,3 +1,4 @@
 py-tgcalls
+youtube-dl
 git+https://github.com/pyrogram/pyrogram
 youtube-search
