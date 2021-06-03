@@ -15,7 +15,7 @@ sudo apt update && sudo apt upgrade
 sudo apt install ffmpeg youtube-dl
 git clone https://github.com/kursadHD/TGMusicBot
 cd TGMusicBot
-# config.ini dosyasını düzenleyin
+# config.env dosyasını düzenleyin
 pip3 install -r requirements.txt
 python3 music.py
 
