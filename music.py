@@ -34,7 +34,6 @@ LANG = {
 if os.path.isdir('raw_files') == False:
 	os.mkdir('raw_files')
 
-MAX_DURATION = 10 #minutes
 SUDO = [791215137]
 PREFIX = ['/', '-', '!', '+', '>', '.', '~']
 GROUPS = {}
